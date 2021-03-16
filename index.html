@@ -19,29 +19,23 @@
 </head>
 <div class="fixed-top">Weather Dashboard</div>
 
+<aside class="col-lg-4">
+<form class="form-inline">
+    <label class="sr-only" for="inlineFormInputCity">CityName</label>
+    <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputCity" placeholder="type city name">
+    <button id="showTheWeather" type="submit" class="btn btn-primary mb-2">Submit</button>
+</form>
+</aside>
 
 
-<!-- api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key} -->
-
-<div class="container" style="margin-left: 15px; margin-right: 15px;">
-    <div class="col-lg-4 border" ">
-        <form class=" form-inline">
-        <label for="citySearchField" class="sr-only">Search</label>
-        <input type="text" class="searchField" id="citySearch" placeholder="search a city">
-        <button type="submit" id="showTheWeather") class="btn btn-primary mb-2">search!</button>
-        </form>
-<!-- NOTE TO SELF: look back at the populating shopping list activity to see how to get the 
-formerly-searched city cards to populate and persist -->
-    </div>
-    <div class="col-lg-8 border" style="margin-right: 25px;" id="weatherBox">
+    <div id="weatherBox" class ="col-lg-8 border" style="float: right; margin-left: 25px; margin-right:25px;"> 
         content
-    </div>
-</div>
+        </div>
 
 
-<section>
 
 
+<!-- <section>
     <div class=" card-group col-lg-8">
         <div class="card">
 
@@ -85,7 +79,7 @@ formerly-searched city cards to populate and persist -->
         </div>
     </div>
 
-    </section>
+    </section> -->
 
 
 
