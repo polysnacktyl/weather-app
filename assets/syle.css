@@ -1,6 +1,6 @@
 
 body{
-    font-family: 'Blinker', sans-serif;
+    font-family: 'Kanit', sans-serf;
     margin: 0px;
 }
 
@@ -17,7 +17,7 @@ body{
 .form-inline{
     margin-top: 120px;
     margin-left: 20px;
-    font-family: 'Blinker', sans-serif;
+    font-family: 'Kanit', sans-serif;
 }
 
 .col-lg-4, .col-lg-8{
@@ -35,4 +35,13 @@ body{
   .card-group{
       display: flex;
       float: right;
+  }
+
+  #weatherBox {
+      display:inline-flex;
+      justify-items: right;
+      /* padding-right: 30px; */
+      /* margin-right: 30px; */
+      margin-left: 35px;
+      min-width: 80%;
   }
