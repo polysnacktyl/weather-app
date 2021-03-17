@@ -28,22 +28,12 @@ function knowCity() {
     var city = document.querySelector('#inlineFormInputCity').value.replace(/\s/g, "");
     var cityListEl = $('#cityList').value;
     console.log(city)
-
-    cityListEl.append('<li>' + city + '</li>');
-
-
-      buildApiUrl()
+    buildApiUrl()
 }
-
-// appendCityList
-// // create Element
-// // add content 
-// // append to document 
-
 
 function buildApiUrl() {
     var apiUrlA = 'https://api.openweathermap.org/data/2.5/weather?q='
-    var apiUrlB = '&appid=5e396ffdb012177df336e70811fd23a0'
+    var apiUrlB = '&units=imperial&appid=5e396ffdb012177df336e70811fd23a0'
     var city = document.querySelector('#inlineFormInputCity').value.trim();
     var apiUrl = apiUrlA.concat(city, apiUrlB);
     console.log(apiUrl)
