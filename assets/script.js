@@ -42,13 +42,7 @@ function buildApi() {
     var apiUrlB = '&units=imperial&appid=5e396ffdb012177df336e70811fd23a0'
     var city = document.querySelector('#inlineFormInputCity').value.trim();
     var apiUrl = apiUrlA.concat(city, apiUrlB);
-    // console.log(apiUrl)
-
-    //fetch api from first source
-    //local storage lat and lon and city name 
-
-    //new function, call lat lon from local storage 
-    //feed into new api url concat function
+    console.log(apiUrl)
 
 
 
@@ -63,15 +57,13 @@ function buildApi() {
             var humidity = document.createElement('li');
             var windSpeed = document.createElement('li');
             const location = {
-                lattitude: data.coord.lat,
+                latitude: data.coord.lat,
                 longitude: data.coord.lon
             }
 
             localStorage.setItem('coordz', JSON.stringify(location));
-            
-            
-           
-            
+
+
             cityName.textContent = data.name + ", " + Today;
             currentTemp.textContent = "temperature: " + data.main.temp + "°";
             humidity.textContent = "humidity: " + data.main.humidity + "%";
@@ -80,15 +72,30 @@ function buildApi() {
             currentWeatherContainer.appendChild(currentTemp);
             currentWeatherContainer.appendChild(humidity);
             currentWeatherContainer.appendChild(windSpeed);
+
+
+            var latLon = JSON.parse(localStorage.getItem('coordz'));
+            console.log(latLon);
+            console.log(latLon.latitude);
+            console.log(latLon.longitude);
+
+
+            var uviApi = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + latLon.latitude + '&lon=' + latLon.longitude + '&units=imperial&appid=5e396ffdb012177df336e70811fd23a0';
+            console.log(uviApi);
+
         });
 
 }
 
-var latLon = localStorage.getItem('coordz')
-var locations = JSON.parse(latLon);
-console.log(locations);
 
 
+// var latLon = JSON.parse(localStorage.getItem('coordz'));
+// console.log(latLon);
+
+
+// var worldLocation = document.createElement('li');
+// worldLocation.innerText = latLon;
+// currentWeatherContainer.appendChild(worldLocation);
 
 
 
