@@ -19,7 +19,7 @@
 
 var Today = moment().format('MMMM Do YYYY');
 $("#itsToday").text(Today);
-console.log(Today)
+
 
 
 var getCity = document.getElementById("citySearch")
@@ -42,7 +42,7 @@ function buildApi() {
     var apiUrlB = '&units=imperial&appid=5e396ffdb012177df336e70811fd23a0'
     var city = document.querySelector('#inlineFormInputCity').value.trim();
     var apiUrl = apiUrlA.concat(city, apiUrlB);
-    console.log(apiUrl)
+    console.log('apiUrl 1: ' + apiUrl)
 
 
 
@@ -52,17 +52,18 @@ function buildApi() {
         })
         .then(function (data) {
             console.log(data);
+            console.log(data.name + ', ' + Today);
+            console.log(data.weather[0]);
+            console.log(data.weather[1]);
             var cityName = document.createElement('li');
             var currentTemp = document.createElement('li');
             var humidity = document.createElement('li');
             var windSpeed = document.createElement('li');
             const location = {
                 latitude: data.coord.lat,
-                longitude: data.coord.lon
+                longitude: data.coord.lon,
+                apiCityName: data.name
             }
-
-            localStorage.setItem('coordz', JSON.stringify(location));
-
 
             cityName.textContent = data.name + ", " + Today;
             currentTemp.textContent = "temperature: " + data.main.temp + "°";
@@ -73,19 +74,51 @@ function buildApi() {
             currentWeatherContainer.appendChild(humidity);
             currentWeatherContainer.appendChild(windSpeed);
 
-
+            localStorage.setItem('coordz', JSON.stringify(location));
             var latLon = JSON.parse(localStorage.getItem('coordz'));
-            console.log(latLon);
+            // console.log(latLon);
             console.log(latLon.latitude);
             console.log(latLon.longitude);
 
-
             var uviApi = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + latLon.latitude + '&lon=' + latLon.longitude + '&units=imperial&appid=5e396ffdb012177df336e70811fd23a0';
-            console.log(uviApi);
+            console.log('apiUrl 2: ' + uviApi);
 
-        });
+            fetch(uviApi)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data);
+                console.log('uv index: ' + data.current.uvi);
+                console.log('5 day/day 1: ');
+                console.log(data.daily[0]);
+                
+                var fiveDay1=document.createElement('li');
+                fiveDay1.textContent = '5 day forecast, day 1: ' + data.daily[0].rain;
+                currentWeatherContainer.appendChild(fiveDay1);
+
+                var uvIndex=document.createElement('li');
+                uvIndex.textContent = 'UV index: ' + data.current.uvi;
+                currentWeatherContainer.appendChild(uvIndex);
+            });
+        
+
+
+        }); 
+
+
 
 }
+
+// fetch(uviApi)
+//     .then(function (response) {
+//         return response.json();
+//     })
+//     .then(function (data) {
+//         console.log(data);
+//     });
+
+
 
 
 
