@@ -1,7 +1,10 @@
 // GIVEN a weather dashboard with form inputs
 // WHEN I search for a city
 
-
+//current: city name, date
+//      icon representations of: temp, humidity, wind speed, uv index 
+//                              uv index: color-coded for favorable/moderate/severe
+//5 day forecast also with icon-ified current conditions, temp, humidity 
 
 
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
@@ -14,29 +17,39 @@
 // WHEN I click on a city in the search history
 // THEN I am again presented with current and future conditions for that city
 
-
+var Today = moment().format('MMMM Do YYYY');
+$("#itsToday").text(Today);
+console.log(Today)
 
 
 var getCity = document.getElementById("citySearch")
 var showWeather = document.getElementById("weatherBox");
 var fetchButton = document.getElementById("showTheWeather");
-var cityListEl = $('#cityList');
+var currentWeatherContainer = document.getElementById("currentWeather");
+var searchedCities = document.getElementById("#searchedCities")
+
 
 
 function knowCity() {
     event.preventDefault();
     var city = document.querySelector('#inlineFormInputCity').value.replace(/\s/g, "");
-    var cityListEl = $('#cityList').value;
-    console.log(city)
-    buildApiUrl()
+    // console.log(city);
+    buildApi()
 }
 
-function buildApiUrl() {
+function buildApi() {
     var apiUrlA = 'https://api.openweathermap.org/data/2.5/weather?q='
     var apiUrlB = '&units=imperial&appid=5e396ffdb012177df336e70811fd23a0'
     var city = document.querySelector('#inlineFormInputCity').value.trim();
     var apiUrl = apiUrlA.concat(city, apiUrlB);
-    console.log(apiUrl)
+    // console.log(apiUrl)
+
+    //fetch api from first source
+    //local storage lat and lon and city name 
+
+    //new function, call lat lon from local storage 
+    //feed into new api url concat function
+
 
 
     fetch(apiUrl)
@@ -45,12 +58,52 @@ function buildApiUrl() {
         })
         .then(function (data) {
             console.log(data);
-            for (var i = 0; i < data.length; i++) {
-                console.log(data[i].url);
+            var cityName = document.createElement('li');
+            var currentTemp = document.createElement('li');
+            var humidity = document.createElement('li');
+            var windSpeed = document.createElement('li');
+            const location = {
+                lattitude: data.coord.lat,
+                longitude: data.coord.lon
             }
+
+            localStorage.setItem('coordz', JSON.stringify(location));
+            
+            
+           
+            
+            cityName.textContent = data.name + ", " + Today;
+            currentTemp.textContent = "temperature: " + data.main.temp + "°";
+            humidity.textContent = "humidity: " + data.main.humidity + "%";
+            windSpeed.textContent = "wind speed: " + data.wind.speed + "mph";
+            currentWeatherContainer.appendChild(cityName);
+            currentWeatherContainer.appendChild(currentTemp);
+            currentWeatherContainer.appendChild(humidity);
+            currentWeatherContainer.appendChild(windSpeed);
         });
 
 }
+
+var latLon = localStorage.getItem('coordz')
+var locations = JSON.parse(latLon);
+console.log(locations);
+
+
+
+
+
+// pittsburgh = "https://api.openweathermap.org/data/2.5/onecall?lat=40.4406&lon=-79.9959&units=imperial&appid=5e396ffdb012177df336e70811fd23a0";
+// fetch(pittsburgh)
+//     .then(function (response) {
+//         return response.json();
+//     })
+//     .then(function (data) {
+//         console.log(data);
+//         console.log("current temp: " + data.current.temp + "°");
+//         console.log("humidity: " + data.current.humidity + "%")
+//         console.log("wind speed: " + data.current.wind_speed + "mph");
+//         console.log("uv index: " + data.current.uvi);
+//     });
 
 
 fetchButton.addEventListener('click', knowCity)
