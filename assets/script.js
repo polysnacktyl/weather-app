@@ -111,14 +111,6 @@ function buildApi() {
 }
 
 
-geoWhatsit = 'https://www.mapquestapi.com/search/v4/place?location=40.4406%2C-79.9959&sort=distance&feedback=false&key=NLqGBYJ0IocGM0MsEFDjFCZ1Y1RlGOUC&circle=40.4406%2C-79.9959%2C10000&pageSize=25&page=1&q=restaurant';
-fetch(geoWhatsit)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-        console.log(data);
-    });
 
 
 
